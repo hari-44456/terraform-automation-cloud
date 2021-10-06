@@ -1,0 +1,14 @@
+- name: Terraform and Ansible Integration
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Install nginx
+      package:
+        name: nginx
+        state: present
+        
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started

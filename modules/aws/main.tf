@@ -43,7 +43,7 @@ resource "aws_instance" "web" {
   }
 
   provisioner "local-exec" {
-      command = "echo ${self.public_ip} >> public_ip.txt"
+      command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i '${self.public_ip},' --private-key ${var.private_key_location} ansible/playbook.yml"
   }
 
   tags = {
