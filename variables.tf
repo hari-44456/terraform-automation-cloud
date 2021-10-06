@@ -7,7 +7,7 @@ variable private_key_location {}
 variable user{}
 variable prefix {
     description = "The prefix which should be used for all resources in this example"
-    default = "dev"
+    default = "narahari"
 }
 variable project {
     description = "Specify Project Name"
