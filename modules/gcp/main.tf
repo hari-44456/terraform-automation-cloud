@@ -21,7 +21,7 @@ resource "google_compute_firewall" "webserverrule" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80","443"]
+    ports    = ["22","80","443"]
   }
 
   source_ranges = ["0.0.0.0/0"] 
@@ -73,7 +73,7 @@ resource "google_compute_instance" "dev" {
   }
 
    provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${google_compute_address.static[0].address}, --private-key ${var.private_key_location} playbook.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${var.user}   -i ${google_compute_address.static[0].address}, --private-key ${var.private_key_location} playbook.yml"
   }
 
   depends_on = [ google_compute_firewall.firewall[0], google_compute_firewall.webserverrule[0] ]
