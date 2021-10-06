@@ -73,7 +73,7 @@ resource "google_compute_instance" "dev" {
   }
 
    provisioner "local-exec" {
-      command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i '${google_compute_address.static[0].address},' --private-key ${var.private_key_location} ./ansible/playbook.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${google_compute_address.static[0].address}, --private-key ${var.private_key_location} playbook.yml"
   }
 
   depends_on = [ google_compute_firewall.firewall[0], google_compute_firewall.webserverrule[0] ]
