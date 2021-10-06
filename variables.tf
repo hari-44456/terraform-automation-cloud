@@ -1,7 +1,7 @@
 variable public_key_location {}
 variable "custom_input" {
     type = number
-    description = "Choose 1-AWS \n 2-AZURE \n 3-GCP \n 4- AWS + AZURE \n 5- AWS + GCP \n 6- AZURE + GCP \n 7- AWS + AZURE +"
+    description = "Choose \n 1-AWS \n 2-AZURE \n 3-GCP \n 4- AWS + AZURE \n 5- AWS + GCP \n 6- AZURE + GCP \n 7- AWS + AZURE + GCP"
 }
 variable private_key_location {}
 variable user{}
