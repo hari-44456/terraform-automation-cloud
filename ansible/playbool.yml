@@ -3,10 +3,8 @@
   become: true
   
   tasks:
-    - name: Install nginx
-      package:
-        name: nginx
-        state: present
+    - name: ensure nginx is at the latest version
+      apt: name=nginx state=latest
         
     - name: Start Nginx
       service:
