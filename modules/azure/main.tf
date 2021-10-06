@@ -14,6 +14,29 @@ resource "azurerm_virtual_network" "main" {
   resource_group_name = azurerm_resource_group.main[0].name
 }
 
+resource "azurerm_network_security_group" "example" {
+  count = var.number_of_instances
+  name                = "acceptanceTestSecurityGroup1"
+  location            = azurerm_resource_group.main[0].location
+  resource_group_name = azurerm_resource_group.main[0].name
+
+  security_rule {
+    name                       = "${var.prefix}-rule"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  tags = {
+    environment = "DEV"
+  }
+}
+
 resource "azurerm_subnet" "internal" {
 
   count = var.number_of_instances
@@ -48,6 +71,12 @@ resource "azurerm_network_interface" "main" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.main[0].id
   }
+}
+
+resource "azurerm_network_interface_security_group_association" "example" {
+  count = var.number_of_instances
+  network_interface_id      = azurerm_network_interface.main[0].id
+  network_security_group_id = azurerm_network_security_group.example[0].id
 }
 
 resource "azurerm_linux_virtual_machine" "main" {
@@ -93,7 +122,7 @@ resource "azurerm_linux_virtual_machine" "main" {
     }
   }
 
-  provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${self.public_ip_address}, --private-key ${var.private_key_location} playbook.yml"
-  }
+  # provisioner "local-exec" {
+  #   command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${self.public_ip_address}, --private-key ${var.private_key_location} playbook.yml"
+  # }
 }
