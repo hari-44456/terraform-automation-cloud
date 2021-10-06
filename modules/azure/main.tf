@@ -94,6 +94,6 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   provisioner "local-exec" {
-      command = "echo ${self.public_ip_address} >> public_ip_azure.txt"
+      command = "echo ${self.public_ip_address} >> public_ip.txt"
   }
 }

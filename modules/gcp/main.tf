@@ -72,6 +72,10 @@ resource "google_compute_instance" "dev" {
     ]
   }
 
+   provisioner "local-exec" {
+      command = "echo ${google_compute_address.static[0].address} >> public_ip.txt"
+  }
+
   depends_on = [ google_compute_firewall.firewall[0], google_compute_firewall.webserverrule[0] ]
 
   metadata = {
