@@ -1,4 +1,5 @@
 module "vpc" {
+  count = var.number_of_instances
   source = "terraform-aws-modules/vpc/aws"
 
   name = "my-vpc"
@@ -17,7 +18,8 @@ module "vpc" {
 }
 
 resource aws_security_group "myapp-sg" {
-    vpc_id =  module.vpc.vpc_id
+    count = var.number_of_instances
+    vpc_id =  module.vpc[0].vpc_id
     name = "${var.prefix}-sg"
 
     ingress {
@@ -76,9 +78,9 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   key_name = aws_key_pair.deployer[0].key_name
 
-  subnet_id = module.vpc.public_subnets[0]
+  subnet_id = module.vpc[0].public_subnets[0]
   availability_zone = var.avail_zone
-  vpc_security_group_ids = [aws_security_group.myapp-sg.id]
+  vpc_security_group_ids = [aws_security_group.myapp-sg[0].id]
   associate_public_ip_address = true
 
   provisioner "remote-exec" {
