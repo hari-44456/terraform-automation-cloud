@@ -6,3 +6,6 @@
      default = "narahari"
  }
  variable "prefix" {}
+variable vpc_cidr_block {}
+variable avail_zone {}
+variable subnet_cidr_block {}

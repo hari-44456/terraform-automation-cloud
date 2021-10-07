@@ -15,3 +15,6 @@ variable project {
 variable region {
     description =" Specify Region"
 }
+variable vpc_cidr_block {}
+variable avail_zone {}
+variable subnet_cidr_block {}
