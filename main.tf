@@ -7,7 +7,7 @@ module "aws_cust" {
     prefix = var.prefix
     vpc_cidr_block = var.vpc_cidr_block
     subnet_cidr_block = var.subnet_cidr_block
-    avail_zone = var.avail_zone
+    avail_zone = "us-east-2a"
     number_of_instances = var.custom_input == 1 || var.custom_input == 4 || var.custom_input == 5 || var.custom_input == 7  ? 1 : 0
 }
 
