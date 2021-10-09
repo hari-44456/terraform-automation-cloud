@@ -1,9 +1,15 @@
 - name: Terraform and Ansible Integration
   hosts: all
   become: true
-  
+  vars_prompt:
+    - name: source_path
+      prompt: Enter path to file that to be copied to remote
+      private: no
+
+    - name: dest_path
+      prompt: Enter path to which file to be saved
   tasks:
     - name: Copy file to remote server
       copy:
-        src: /home/ec2-user/abc.txt
-        dest: /narahari/
+        src: "{{source_path}}"
+        dest: "{{dest_path}}"
